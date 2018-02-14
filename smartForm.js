@@ -3,23 +3,39 @@
 var userData = {
 
 	name: '',
-	email: ''
+	email: '',
 
-	html: {likes:{},dislikes:{}},
-	css: {likes:{},dislikes:{}},
-	js: {likes:{},dislikes:{}},
-	strength: {css: '', js: '', html: ''}
+	html: {likes:[],dislikes:[]},
+	css: {likes:[],dislikes:[]},
+	js: {likes:[],dislikes:[]},
+	strength: {css: '', js: '', html: ''},
 	currentQuestion: '#welcome'
 
 
 
 };
 
+//console.log(localStorage.getItem('userData'));
+if(localStorage.getItem('userData')){
+	userData = JSON.parse(localStorage.getItem('userData'));
+	
+    $('#welcome').show();
+	$(userData.currentQuestion).hide();
+	
+	$('#name').val(userData.name);
+	$('#email').val(userData.email);
+}
+else
+{
+	localStorage.setItem('userData', JSON.stringify(userData));
+}  
 $('#start').click(function(){
 
 	console.log("start");
 	$('#welcome').hide();
 	$('#q1').show();
+	userData.currentQuestion="#q1";
+	localStorage.setItem('userData', JSON.stringify(userData));
 });
 
 
@@ -35,6 +51,7 @@ $('#q1next').click(function(){
 
  userData.name = $('#name').val();
  userData.name = $('#email').val();
+ localStorage.setItem(userData);
  $('#q2').show();
  $('#q1').show();
   }
